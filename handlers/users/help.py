@@ -12,7 +12,7 @@ async def bot_help(message: types.Message):
             "/start - Botni ishga tushirish",
             "/help - Yordam")
     
-    await message.answer("\n".join(text),reply_markup=types.ReplyKeyboardRemove())
+    await message.answer("\n".join(text))
     userID = message.from_user.id
     commands = [ 
                {"/users":"Barcha foydalanuvchilar ro'yxati."},

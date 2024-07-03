@@ -131,3 +131,6 @@ dmypy.json
 .env
 data/mydb.db
 users.txt
+/*Db.*
+/*DB.*
+/*db.*

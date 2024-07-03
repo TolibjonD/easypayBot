@@ -1,6 +1,6 @@
-userID: 6790688357
-To'liq ismi: Easy Pay
-Foydalanuvchi nomi: @Easy_Pay_Uzbekistan
-Status: 👨‍💻 Admin
-Sana (UZB vaqti): 02/07/2024 00:06:17
+userID: 6401117278
+To'liq ismi: Abu Said
+Foydalanuvchi nomi: @Abutalibxon
+Status: 👤 Oddiy foydalanuvchi
+Sana (UZB vaqti): 02/07/2024 00:32:18
 

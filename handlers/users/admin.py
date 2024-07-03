@@ -67,13 +67,8 @@ async def make_admin_userID(message: types.Message, state: FSMContext):
             await message.answer("Barcha foydalanuvchilar shundoq ham ADMIN ekan. Boshqa buyruqlardan foydalanib ko'ring !...")
             await state.finish()
         else:
-            isUserID=True
-            for user in users:
-                if enteredUserID != user.id:
-                    isUserID = True*isUserID
-                else:
-                    isUserID = False*isUserID
-            if isUserID:
+            user_is_exist = await connector.check_user_existence(connector.session,connector.User, enteredUserID)
+            if user_is_exist:
                 user = await connector.makeAdmin(enteredUserID, status=True)
                 if user:
                     text = "Yangi admin muvaffaqiyatli tayinlandi: \n\n"
@@ -87,7 +82,7 @@ async def make_admin_userID(message: types.Message, state: FSMContext):
                 else:
                     await message.answer("Admin qo'shilmadi ! Server xatosi. Dasturchiga murojaat qiling !")
             else:
-                await message.answer("Siz kiritgan ID UserID allaqachon ADMIN ekan yoki siz xatolikga yo'l qo'ymoqdasz !...")
+                await message.answer("Siz kiritgan UserID ro'yxatda mavjud emas yoki siz xatolikga yo'l qo'ymoqdasz !...")
     else:
         users = await connector.selection(connector.User)
         file = textmaker.makeUser(users)

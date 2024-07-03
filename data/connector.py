@@ -116,7 +116,8 @@ async def selection(ModelName,admins=False):
             return admins
         else:
             return
-    return session.query(ModelName).all()
+    else:
+        return session.query(ModelName).all()
 
 async def makeAdmin(userID, status):
     user = session.query(User).filter_by(id=userID).first()

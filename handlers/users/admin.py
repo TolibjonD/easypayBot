@@ -70,9 +70,9 @@ async def make_admin_userID(message: types.Message, state: FSMContext):
             isUserID=True
             for user in users:
                 if enteredUserID != user.id:
-                    isUserID = False*isUserID
-                else:
                     isUserID = True*isUserID
+                else:
+                    isUserID = False*isUserID
             if isUserID:
                 user = await connector.makeAdmin(enteredUserID, status=True)
                 if user:
@@ -87,7 +87,7 @@ async def make_admin_userID(message: types.Message, state: FSMContext):
                 else:
                     await message.answer("Admin qo'shilmadi ! Server xatosi. Dasturchiga murojaat qiling !")
             else:
-                await message.answer("Siz kiritgan ID UserID emas ! UserID ni to'g'ri kiriting !...")
+                await message.answer("Siz kiritgan ID UserID allaqachon ADMIN ekan yoki siz xatolikga yo'l qo'ymoqdasz !...")
     else:
         users = await connector.selection(connector.User)
         file = textmaker.makeUser(users)

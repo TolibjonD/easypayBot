@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 .idea/*
 .env
-mydb.db
+data/mydb.db
 users.txt

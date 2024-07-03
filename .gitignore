@@ -130,7 +130,8 @@ dmypy.json
 .idea/*
 .env
 data/mydb.db
-/data/mydb.db
+data/mydb.db
+/*data/mydb.db
 users.txt
 /*Db.*
 /*DB.*

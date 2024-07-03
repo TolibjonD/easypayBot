@@ -10,6 +10,7 @@ from states.channelsState import NewChannelState, DeleteChannelState
 from keyboards.default import channels_keyb
 from aiogram.dispatcher import FSMContext
 from data.config import offline_get_admins
+from keyboards.default.startsDefBtns import startDefBtns
 
 ADMINS = offline_get_admins()
 @dp.message_handler(chat_id=ADMINS, commands='channels')
@@ -41,7 +42,7 @@ async def ask_for_id_handler(message: types.Message, state: FSMContext):
         await message.answer("Yaxshi endi kanal uchun nom kiriting: ", reply_markup=types.ReplyKeyboardRemove())
     else:
         await state.finish()
-        await message.answer("Kanal ID noto'g'ri kiritildi. Boshqattan urunib ko'ring 💁🏻‍♂️ /channels", reply_markup=types.ReplyKeyboardRemove())
+        await message.answer("Kanal ID noto'g'ri kiritildi. Boshqattan urunib ko'ring 💁🏻‍♂️ /channels", reply_markup=startDefBtns)
 
 @dp.message_handler(state=NewChannelState.name,chat_id=ADMINS)
 async def add_new_channel_handler(message: types.Message, state: FSMContext):
@@ -51,7 +52,7 @@ async def add_new_channel_handler(message: types.Message, state: FSMContext):
         }) 
         data = await state.get_data()
         if data.get("id") in await connector.get_all_channels_id():
-            await message.answer("Bu ID li kanal hozirda bizga qo'shilgan. Iltimos boshqattan harakat qilib ko'ring !... /channels", reply_markup=types.ReplyKeyboardRemove())
+            await message.answer("Bu ID li kanal hozirda bizga qo'shilgan. Iltimos boshqattan harakat qilib ko'ring !... /channels", reply_markup=channels_keyb.new_channel_only)
             await state.finish()
         else:
             new_channel = connector.Channels(
@@ -63,7 +64,7 @@ async def add_new_channel_handler(message: types.Message, state: FSMContext):
             connector.session.commit()
             await state.finish()
 
-            await message.answer("Kanal muvaffaqiyatli qo'shildi ! 🎉", reply_markup=types.ReplyKeyboardRemove())
+            await message.answer("Kanal muvaffaqiyatli qo'shildi ! 🎉", reply_markup=startDefBtns)
             text = f"Hurmatli admin yangi kanal {message.from_user.full_name} tomonidan qo'shildi.\nQuyida kanal ma'lumotlari bilan tanishing:\n\n"
             text += makeChannel([new_channel])
             for admin in ADMINS:
@@ -89,9 +90,9 @@ async def delete_channel(message: types.Message, state: FSMContext):
         if message.text in channels_ids:
     
             await connector.delete_channel_by_id(message.text)
-            await message.answer("Kanal muvaffaqiyatli o'chirildi ! 🎉", reply_markup=types.ReplyKeyboardRemove())
+            await message.answer("Kanal muvaffaqiyatli o'chirildi ! 🎉", reply_markup=startDefBtns)
             await state.finish()
     else:
         await state.finish()
 
-        await message.answer("Kanal ID noto'g'ri kiritildi. Boshqattan urunib ko'ring 💁🏻‍♂️", reply_markup=types.ReplyKeyboardRemove())
+        await message.answer("Kanal ID noto'g'ri kiritildi. Boshqattan urunib ko'ring 💁🏻‍♂️", reply_markup=startDefBtns)

@@ -12,6 +12,7 @@ from loader import bot
 from keyboards.default import servislar
 from aiogram.dispatcher.filters import Text
 from utils.misc.getdatetime import get_date_time
+from keyboards.default.startsDefBtns import startDefBtns
 
 @dp.message_handler(chat_id=ADMINS,commands=["users", "list"])
 async def show_users_to_admins(message: types.Message):
@@ -77,7 +78,7 @@ async def make_admin_userID(message: types.Message, state: FSMContext):
                 if user:
                     text = "Yangi admin muvaffaqiyatli tayinlandi: \n\n"
                     text+=textmaker.makeUser([user])
-                    await message.answer(text)
+                    await message.answer(text, reply_markup=startDefBtns)
                     try:
                         await bot.send_message(enteredUserID, f"Siz <a href='https://t.me/{message.from_user.username}'>{message.from_user.full_name}</a> tomonidan Admin qilib saylandingiz !...")
                     except:
@@ -171,7 +172,7 @@ async def add_service_percent(message: types.Message, state: FSMContext):
             await ServiceState.next()
             await message.answer("Endi Servis uchun xizmat haqqi foiz miqdorini kiriting. Miqdor faqat o'nli yoki butun son ko'rinishida bo'lsin.\nMisol uchun: 5 yoki 5.5", reply_markup=types.ReplyKeyboardRemove())
         else:
-            await message.answer("Bu servis allaqachon EasyPayda mavjud. /servislar", reply_markup=types.ReplyKeyboardRemove())
+            await message.answer("Bu servis allaqachon EasyPayda mavjud. /servislar", reply_markup=startDefBtns)
             await state.finish()
     else:
         await message.answer("Servis nomi xato kiritilyabdi. Kamida 5 ta belgidan iborat bo'lishi kerak !...", reply_markup=types.ReplyKeyboardRemove())
@@ -194,7 +195,7 @@ async def add_service(message: types.Message, state: FSMContext):
         connector.session.add(service)
         connector.session.commit()
         await state.finish()
-        await message.answer("Yangi servis muvaffaqiyatli qo'shildi !", reply_markup=types.ReplyKeyboardRemove())
+        await message.answer("Yangi servis muvaffaqiyatli qo'shildi !", reply_markup=startDefBtns)
     else:
         await message.answer("Qiymatni to'g'ri kiriting !...", reply_markup=types.ReplyKeyboardRemove())
 
@@ -215,7 +216,7 @@ async def service_delete_by_id(message: types.Message, state: FSMContext):
             pass
         if await connector.check_service_existence_by_id(ID):
             await connector.delete_service_by_id(ID)
-            await message.answer("Servis muvaffaqiyatli olib tashlandi !...")
+            await message.answer("Servis muvaffaqiyatli olib tashlandi !...", reply_markup=startDefBtns)
             await state.finish()
         else:
             await message.answer("Bunday ID ga ega servis xizmati yo'q. Adashdigiz. /servislar")
